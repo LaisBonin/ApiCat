@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:api_cat/api/fact.dart';
 import 'package:api_cat/api/image.dart';
+import 'package:api_cat/widget/next_button.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,12 +14,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -51,26 +52,72 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.memory(catImage),
-            Text(
-              catFact,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _getInfo,
-        tooltip: '',
-        child: const Icon(Icons.add),
-      ),
-    );
+    return Container(
+        padding: const EdgeInsets.all(25),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          opacity: 0.7,
+          colorFilter: ColorFilter.mode(
+              Color.fromARGB(255, 194, 194, 193), BlendMode.dstATop),
+          image: AssetImage("images/catborder.png"),
+          fit: BoxFit.fill,
+        )),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FutureBuilder<Uint8List>(
+                  future: getImage(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(
+                        color: Colors.black,
+                        backgroundColor: Colors.deepOrange,
+                      );
+                    }
+                    if (snapshot.hasData && !snapshot.hasError) {
+                      return Image.memory(snapshot.data!);
+                    }
+                    if (snapshot.hasError) {
+                      return const Text("DEU RUIM");
+                    }
+                    return const CircularProgressIndicator();
+                  }),
+
+              const SizedBox(
+                height: 32,
+              ),
+
+              // catImage != null ? Image.memory(catImage!) : Icon(Icons.pets),
+              FutureBuilder<String>(
+                  future: getFact(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    }
+                    if (snapshot.hasError) {
+                      return const Text("deu erro");
+                    }
+                    if (snapshot.hasData && !snapshot.hasError) {
+                      return Text(
+                        snapshot.data!,
+                      );
+                    }
+                    return const Text("ALGO DEU ERRADO");
+                  }),
+                 const NextButton()
+                   
+                 
+            ],
+            
+          ),
+          
+          floatingActionButton: FloatingActionButton(
+            onPressed: _getInfo,
+            tooltip: '',
+            child: const Icon(Icons.add),
+          ),
+        ));
   }
 }
