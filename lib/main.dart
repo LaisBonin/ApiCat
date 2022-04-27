@@ -34,9 +34,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String catFact = " ";
-  Uint8List catImage = Uint8List(0);
+  Uint8List? catImage;
 
-  void _getInfo() async {
+  Future<void> _getInfo() async {
     catFact = await getFact();
     catImage = await getImage();
     setState(() {});
@@ -59,15 +59,42 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.memory(catImage),
-            Text(
-              catFact,
-            ),
+            FutureBuilder<Uint8List>(
+                future: getImage(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  if (snapshot.hasData && !snapshot.hasError) {
+                    return Image.memory(snapshot.data!);
+                  }
+                  if (snapshot.hasError) {
+                    return const Text("DEU RUIM");
+                  }
+                  return const CircularProgressIndicator();
+                }),
+            // catImage != null ? Image.memory(catImage!) : Icon(Icons.pets),
+            FutureBuilder<String>(
+                future: getFact(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return  Container();
+                  }
+                  if (snapshot.hasError) {
+                    return  Text("deu erro");
+                  }
+                  if (snapshot.hasData && !snapshot.hasError) {
+                    return Text(
+                      snapshot.data!,
+                    );
+                  }
+                  return Text("ALGO DEU ERRADO");
+                }),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _getInfo,
+        onPressed:() async => await _getInfo(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
