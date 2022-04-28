@@ -10,13 +10,15 @@ class CatDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        // Container(
-        //   decoration: BoxDecoration(
-        //     image: DecorationImage(
-        //       image: NetworkImage(catBreed.image2!),
-        //     ),
-        //   ),
-        // ),
+        Container(
+          height: 300,
+          width: 300,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage("https://cdn2.thecatapi.com/images/${catBreed.referenceImageId}.jpg"),
+            ),
+          ),
+        ),
         Text(catBreed.name ?? ""),
         const SizedBox(
           height: 16,
