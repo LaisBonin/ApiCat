@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 Future<List<Breeds>> getBreeds() async {
   final dio = Dio();
-  const url = "https://api.thecatapi.com/v1/Breeds?limit=10";
+  const url = "https://api.thecatapi.com/v1/Breeds";
   final response = await dio.get(url);
   final List<dynamic> json = response.data;
 
@@ -10,7 +10,6 @@ Future<List<Breeds>> getBreeds() async {
   List<Breeds> breeds2 = json
       .map((objectInsideTheList) => Breeds.fromJson(objectInsideTheList))
       .toList();
-
 
   List<Breeds> breeds = [];
   json.forEach((element) {
@@ -59,47 +58,50 @@ class Breeds {
   String? wikipediaUrl;
   int? hypoallergenic;
   String? referenceImageId;
-  Image? image;
+  // String? image;
+  Image? image2;
 
-  Breeds(
-      {this.weight,
-      this.id,
-      this.name,
-      this.cfaUrl,
-      this.vetstreetUrl,
-      this.vcahospitalsUrl,
-      this.temperament,
-      this.origin,
-      this.countryCodes,
-      this.countryCode,
-      this.description,
-      this.lifeSpan,
-      this.indoor,
-      this.lap,
-      this.altNames,
-      this.adaptability,
-      this.affectionLevel,
-      this.childFriendly,
-      this.dogFriendly,
-      this.energyLevel,
-      this.grooming,
-      this.healthIssues,
-      this.intelligence,
-      this.sheddingLevel,
-      this.socialNeeds,
-      this.strangerFriendly,
-      this.vocalisation,
-      this.experimental,
-      this.hairless,
-      this.natural,
-      this.rare,
-      this.rex,
-      this.suppressedTail,
-      this.shortLegs,
-      this.wikipediaUrl,
-      this.hypoallergenic,
-      this.referenceImageId,
-      this.image});
+  Breeds({
+    this.weight,
+    this.id,
+    this.name,
+    this.cfaUrl,
+    this.vetstreetUrl,
+    this.vcahospitalsUrl,
+    this.temperament,
+    this.origin,
+    this.countryCodes,
+    this.countryCode,
+    this.description,
+    this.lifeSpan,
+    this.indoor,
+    this.lap,
+    this.altNames,
+    this.adaptability,
+    this.affectionLevel,
+    this.childFriendly,
+    this.dogFriendly,
+    this.energyLevel,
+    this.grooming,
+    this.healthIssues,
+    this.intelligence,
+    this.sheddingLevel,
+    this.socialNeeds,
+    this.strangerFriendly,
+    this.vocalisation,
+    this.experimental,
+    this.hairless,
+    this.natural,
+    this.rare,
+    this.rex,
+    this.suppressedTail,
+    this.shortLegs,
+    this.wikipediaUrl,
+    this.hypoallergenic,
+    this.referenceImageId,
+    // this.image,
+    this.image2,
+  });
 
   Breeds.fromJson(Map<String, dynamic> json) {
     weight =
@@ -140,7 +142,8 @@ class Breeds {
     wikipediaUrl = json['wikipedia_url'];
     hypoallergenic = json['hypoallergenic'];
     referenceImageId = json['reference_image_id'];
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    // image = json['image']['url'];
+    image2 = json['image2'] != null ? new Image.fromJson(json['image2']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -184,8 +187,9 @@ class Breeds {
     data['wikipedia_url'] = this.wikipediaUrl;
     data['hypoallergenic'] = this.hypoallergenic;
     data['reference_image_id'] = this.referenceImageId;
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
+    // data['image']['url'] = this.image;
+    if (this.image2 != null) {
+      data['image2'] = this.image2!.toJson();
     }
     return data;
   }

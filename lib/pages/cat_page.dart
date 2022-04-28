@@ -47,7 +47,12 @@ class _CatPageState extends State<CatPage> {
           backgroundColor: Colors.transparent,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: 
+            <Widget>[
+              Text("a", 
+              style: TextStyle(
+
+              ),),
               FutureBuilder<Uint8List>(
                   future: getImage(),
                   builder: (context, snapshot) {
@@ -87,18 +92,24 @@ class _CatPageState extends State<CatPage> {
                     }
                     if (snapshot.hasData && !snapshot.hasError) {
                       return Text(
-                        snapshot.data!,
+                        snapshot.data!, 
+                        style: TextStyle(
+
+                        ),
                       );
                     }
                     return const Text("ALGO DEU ERRADO");
                   }),
+                  SizedBox(height: 16),
               NextButton(
                 text: "More Cats",
                 action: () {
                   _getInfo();
                 },
               ),
-              const SizedBox(height: 32,),
+              const SizedBox(
+                height: 16,
+              ),
               NextButton(
                 text: "Bonus",
                 action: () {
