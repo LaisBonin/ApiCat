@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+
 class NextButton extends StatelessWidget {
-  const NextButton({Key? key}) : super(key: key);
+
+final Function action;
+final String text;
+  const NextButton({Key? key,required this.action, required this.text}) : super(key: key);
 
   
 
@@ -9,7 +13,7 @@ class NextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 32,
-      width: 80,
+      width: 130,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: Colors.deepOrange,
@@ -17,9 +21,9 @@ class NextButton extends StatelessWidget {
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
             )),
-        onPressed: (){},
-        child: const Center(
-          child:  Text("More Cats"),
+        onPressed: () => action(),
+        child: Center(
+          child:  Text(text),
             
         ),
       ),
