@@ -59,7 +59,7 @@ class Breeds {
   int? hypoallergenic;
   String? referenceImageId;
   // String? image;
-  Image? image2;
+  // Image? image2;
 
   Breeds({
     this.weight,
@@ -100,7 +100,7 @@ class Breeds {
     this.hypoallergenic,
     this.referenceImageId,
     // this.image,
-    this.image2,
+    // this.image2,
   });
 
   Breeds.fromJson(Map<String, dynamic> json) {
@@ -143,7 +143,7 @@ class Breeds {
     hypoallergenic = json['hypoallergenic'];
     referenceImageId = json['reference_image_id'];
     // image = json['image']['url'];
-    image2 = json['image2'] != null ? new Image.fromJson(json['image2']) : null;
+    // image2 = json['image2'] != null ? new Image.fromJson(json['image2']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -188,9 +188,9 @@ class Breeds {
     data['hypoallergenic'] = this.hypoallergenic;
     data['reference_image_id'] = this.referenceImageId;
     // data['image']['url'] = this.image;
-    if (this.image2 != null) {
-      data['image2'] = this.image2!.toJson();
-    }
+    // if (this.image2 != null) {
+    //   data['image2'] = this.image2!.toJson();
+    // }
     return data;
   }
 }
