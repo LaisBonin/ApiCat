@@ -8,14 +8,13 @@ class CatDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: [
-        Row(
-          children: [Text(catBreed.name ?? "")],
+    return Scaffold(
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(catBreed.name ?? ""),
+        SizedBox(
+          height: 16,
         ),
-        Row(
-          children: [Text(catBreed.description ?? "")],
-        ),
+        Text(catBreed.description ?? ""),
       ]),
     );
   }

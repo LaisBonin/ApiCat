@@ -6,6 +6,12 @@ Future<List<Breeds>> getBreeds() async {
   final response = await dio.get(url);
   final List<dynamic> json = response.data;
 
+  // Outro jeito de fazer
+  List<Breeds> breeds2 = json
+      .map((objectInsideTheList) => Breeds.fromJson(objectInsideTheList))
+      .toList();
+
+
   List<Breeds> breeds = [];
   json.forEach((element) {
     var breed = Breeds.fromJson(element);
