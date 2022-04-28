@@ -4,6 +4,7 @@ import 'package:api_cat/api/image.dart';
 import 'package:api_cat/pages/cat_list.dart';
 import 'package:api_cat/widget/next_button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CatPage extends StatefulWidget {
   const CatPage({Key? key, required this.title}) : super(key: key);
@@ -45,79 +46,104 @@ class _CatPageState extends State<CatPage> {
         )),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: 
-            <Widget>[
-              Text("a", 
-              style: TextStyle(
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                  height: 150,
+                ),
+                Text(
+                  "Cat Curiosities",
+                  style: TextStyle(
+                    fontFamily: GoogleFonts.josefinSans().fontFamily,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26,
+                  ),
+                ),
+                FutureBuilder<Uint8List>(
+                    future: getImage(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.deepOrange,
+                        );
+                      }
+                      if (snapshot.hasData && !snapshot.hasError) {
+                        return Container(
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(90)),
+                          child: Image.memory(snapshot.data!),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return const Text("DEU RUIM");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
 
-              ),),
-              FutureBuilder<Uint8List>(
-                  future: getImage(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator(
-                        color: Colors.black,
-                        backgroundColor: Colors.deepOrange,
-                      );
-                    }
-                    if (snapshot.hasData && !snapshot.hasError) {
-                      return Container(
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(90)),
-                        child: Image.memory(snapshot.data!),
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return const Text("DEU RUIM");
-                    }
-                    return const CircularProgressIndicator();
-                  }),
+                const SizedBox(
+                  height: 32,
+                ),
 
-              const SizedBox(
-                height: 32,
-              ),
+                // catImage != null ? Image.memory(catImage!) : Icon(Icons.pets),
+                FutureBuilder<String>(
+                    future: getFact(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      }
+                      if (snapshot.hasError) {
+                        return const Text("deu erro");
+                      }
+                      if (snapshot.hasData && !snapshot.hasError) {
+                        return Container(
+                          decoration:const  BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                           color: Colors.orange,
 
-              // catImage != null ? Image.memory(catImage!) : Icon(Icons.pets),
-              FutureBuilder<String>(
-                  future: getFact(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container();
-                    }
-                    if (snapshot.hasError) {
-                      return const Text("deu erro");
-                    }
-                    if (snapshot.hasData && !snapshot.hasError) {
-                      return Text(
-                        snapshot.data!, 
-                        style: TextStyle(
-
-                        ),
-                      );
-                    }
-                    return const Text("ALGO DEU ERRADO");
-                  }),
-                  SizedBox(height: 16),
-              NextButton(
-                text: "More Cats",
-                action: () {
-                  _getInfo();
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              NextButton(
-                text: "Bonus",
-                action: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const CatList()));
-                },
-              )
-            ],
+                          ),
+                         
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              snapshot.data!,
+                              style: TextStyle(
+                                fontFamily:
+                                    GoogleFonts.josefinSans().fontFamily,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+                      return const Text("ALGO DEU ERRADO");
+                    }),
+                const SizedBox(height: 30),
+                NextButton(
+                  text: "More Cats",
+                  action: () {
+                    _getInfo();
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                NextButton(
+                  text: "Bonus",
+                  action: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CatList()));
+                  },
+                )
+              ],
+            ),
           ),
         ));
   }

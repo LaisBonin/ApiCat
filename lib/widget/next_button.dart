@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-
 class NextButton extends StatelessWidget {
-
-final Function action;
-final String text;
-  const NextButton({Key? key,required this.action, required this.text}) : super(key: key);
-
-  
+  final Function action;
+  final String text;
+  const NextButton({Key? key, required this.action, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +20,7 @@ final String text;
             )),
         onPressed: () => action(),
         child: Center(
-          child:  Text(text),
-            
+          child: Text(text),
         ),
       ),
     );
