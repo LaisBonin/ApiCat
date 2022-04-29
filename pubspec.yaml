@@ -92,4 +92,4 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
   color: "#FE9920"
-  image: images/catlogo.png
+  image: images/gifcat2.gif
