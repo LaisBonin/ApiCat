@@ -46,7 +46,7 @@ class _CatListState extends State<CatList> {
                       },
                       child: Card(
                         child: ListTile(
-                          leading: FaIcon(FontAwesomeIcons.cat),
+                          leading: const FaIcon(FontAwesomeIcons.cat),
                            title: Text(
                             snapshot.data![index].name ?? "",
                             style: TextStyle(

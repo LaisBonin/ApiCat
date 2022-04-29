@@ -53,14 +53,14 @@ class _CatPageState extends State<CatPage> {
                 const SizedBox(
                   height: 150,
                 ),
-                Text(
-                  "Cat Curiosities",
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.josefinSans().fontFamily,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26,
-                  ),
-                ),
+                // Text(
+                //   "Cat Curiosities",
+                //   style: TextStyle(
+                //     fontFamily: GoogleFonts.josefinSans().fontFamily,
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 26,
+                //   ),
+                // ),
                 FutureBuilder<Uint8List>(
                     future: getImage(),
                     builder: (context, snapshot) {
