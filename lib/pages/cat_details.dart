@@ -29,16 +29,26 @@ class CatDetails extends StatelessWidget {
           ])),
       child: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(
-            height: 300,
-            width: 300,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  catBreed.id == 'beng' || catBreed.id == 'kora' || catBreed. id == 'drex'
-                  ? "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.png" 
-                  : "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.jpg"
-                ),
+          const Padding(
+            padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+          ),
+          ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+            child: Container(
+              height: 200,
+              width: 250,
+              decoration: BoxDecoration(
+                image: (catBreed.referenceImageId is String)
+                    ? DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(catBreed.id == 'beng' ||
+                                catBreed.id == 'kora' ||
+                                catBreed.id == 'drex'
+                            ? "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.png"
+                            : "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.jpg"))
+                    : const DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("images/pusheen.gif"))
               ),
             ),
           ),
@@ -72,30 +82,33 @@ class CatDetails extends StatelessWidget {
                             width: 2.0,
                             color: Colors.white.withOpacity(0.2),
                           )),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Text(
-                              catBreed.name ?? "",
-                              style: TextStyle(
-                                  fontFamily:
-                                      GoogleFonts.josefinSans().fontFamily,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              catBreed.description ?? "",
-                              style: TextStyle(
-                                  fontFamily: GoogleFonts.mulish().fontFamily,
-                                  fontSize: 18,
-                                  color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                      child: Scrollbar(
+                        isAlwaysShown: false,scrollbarOrientation: ScrollbarOrientation.left,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                catBreed.name ?? "",
+                                style: TextStyle(
+                                    fontFamily:
+                                        GoogleFonts.josefinSans().fontFamily,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Text(
+                                catBreed.description ?? "",
+                                style: TextStyle(
+                                    fontFamily: GoogleFonts.mulish().fontFamily,
+                                    fontSize: 18,
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
