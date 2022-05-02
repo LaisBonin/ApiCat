@@ -4,6 +4,7 @@ import 'package:api_cat/api/fact.dart';
 import 'package:api_cat/api/image.dart';
 import 'package:api_cat/pages/cat_list.dart';
 import 'package:api_cat/widget/next_button.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -224,4 +225,6 @@ class _CatPageState extends State<CatPage> {
       ),
     ));
   }
+  
+
 }
