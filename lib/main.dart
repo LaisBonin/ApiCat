@@ -1,7 +1,7 @@
-import 'dart:typed_data';
-import 'package:api_cat/api/fact.dart';
-import 'package:api_cat/api/image.dart';
+import 'package:api_cat/pages/cat_page.dart';
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -13,91 +13,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      home: Splash(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class Splash extends StatefulWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _SplashState createState() => _SplashState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String catFact = " ";
-  Uint8List? catImage;
-
-  Future<void> _getInfo() async {
-    catFact = await getFact();
-    catImage = await getImage();
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    getFact();
-  }
-
+class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FutureBuilder<Uint8List>(
-                future: getImage(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  }
-                  if (snapshot.hasData && !snapshot.hasError) {
-                    return Image.memory(snapshot.data!);
-                  }
-                  if (snapshot.hasError) {
-                    return const Text("DEU RUIM");
-                  }
-                  return const CircularProgressIndicator();
-                }),
-            // catImage != null ? Image.memory(catImage!) : Icon(Icons.pets),
-            FutureBuilder<String>(
-                future: getFact(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return  Container();
-                  }
-                  if (snapshot.hasError) {
-                    return  Text("deu erro");
-                  }
-                  if (snapshot.hasData && !snapshot.hasError) {
-                    return Text(
-                      snapshot.data!,
-                    );
-                  }
-                  return Text("ALGO DEU ERRADO");
-                }),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:() async => await _getInfo(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return SplashScreen(
+      seconds: 8,
+      navigateAfterSeconds: const CatPage(title: "Cat Curiosities"),
+      image: Image.asset("images/gifcat2.gif"),
+      backgroundColor: const Color.fromARGB(255, 254, 153, 32),
+      // FE9920
+      styleTextUnderTheLoader: const TextStyle(),
+      photoSize: 100.0,
+      loaderColor: Colors.white
     );
   }
 }
