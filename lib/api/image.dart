@@ -8,7 +8,8 @@ Future<Uint8List> getImage() async {
     var response = await Dio().get('https://cataas.com/cat',
         options: Options(responseType: ResponseType.bytes));
     catImage = response.data;
-  } catch (e) {
+  } 
+  catch (e) {
     print(e);
   }
   return catImage;
