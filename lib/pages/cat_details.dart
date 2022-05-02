@@ -1,10 +1,10 @@
 import 'dart:ui';
 
+import 'package:api_cat/widget/return_button.dart';
 import 'package:flutter/material.dart';
 import 'package:api_cat/api/breeds.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 class CatDetails extends StatelessWidget {
   final Breeds catBreed;
@@ -14,6 +14,7 @@ class CatDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         // backgroundColor: Color(0xFFFFC670),
         body: Container(
       height: double.infinity,
@@ -27,28 +28,30 @@ class CatDetails extends StatelessWidget {
             Color.fromARGB(220, 245, 182, 140)
           ])),
       child: SingleChildScrollView(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, children: [
           const Padding(
-            padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           ),
+          Row(children:const  [ReturnButton()],),
+          
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(100.0)),
             child: Container(
               height: 200,
               width: 250,
               decoration: BoxDecoration(
-                image: (catBreed.referenceImageId is String)
-                    ? DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(catBreed.id == 'beng' ||
-                                catBreed.id == 'kora' ||
-                                catBreed.id == 'drex'
-                            ? "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.png"
-                            : "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.jpg"))
-                    : const DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage("images/pusheen.gif"))
-              ),
+                  image: (catBreed.referenceImageId is String)
+                      ? DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(catBreed.id == 'beng' ||
+                                  catBreed.id == 'kora' ||
+                                  catBreed.id == 'drex'
+                              ? "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.png"
+                              : "https://cdn2.thecatapi.com/images/${catBreed.referenceImageId?.replaceAll('\n', '')}.jpg"))
+                      : const DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("images/pusheen.gif"))),
             ),
           ),
           const SizedBox(
@@ -82,7 +85,8 @@ class CatDetails extends StatelessWidget {
                             color: Colors.white.withOpacity(0.2),
                           )),
                       child: Scrollbar(
-                        isAlwaysShown: false,scrollbarOrientation: ScrollbarOrientation.left,
+                        isAlwaysShown: false,
+                        scrollbarOrientation: ScrollbarOrientation.left,
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
